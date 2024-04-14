@@ -1,0 +1,43 @@
+{
+  "packages": [
+    {
+      "package": "moment",
+      "version": "2.24.0",
+      "urls": ["https://g.alicdn.com/mylib/moment/2.24.0/min/moment.min.js"],
+      "library": "moment"
+    },
+    {
+      "package": "lodash",
+      "library": "_",
+      "urls": ["https://g.alicdn.com/platform/c/lodash/4.6.1/lodash.min.js"]
+    },
+    {
+      "package": "element-plus",
+      "library": "ElementPlus",
+      "version": "2.7.0",
+      "urls": [
+        "https://unpkg.com/element-plus/dist/index.css",
+        "https://unpkg.com/element-plus"
+      ]
+    }
+  ],
+  "components": [
+    {
+      "exportName": "AlilcLowcodeMaterialsMeta",
+      "npm": {
+        "package": "@alilc/lowcode-materials"
+      },
+      "url": "https://alifd.alicdn.com/npm/@alilc/lowcode-materials@1.0.7/build/lowcode/meta.js",
+      "urls": {
+        "default": "https://alifd.alicdn.com/npm/@alilc/lowcode-materials@1.0.7/build/lowcode/meta.js",
+        "design": "https://alifd.alicdn.com/npm/@alilc/lowcode-materials@1.0.7/build/lowcode/meta.design.js"
+      }
+    }
+  ],
+  "sort": {
+    "groupList": ["精选组件", "原子组件"],
+    "categoryList": ["通用", "导航", "信息输入", "信息展示", "信息反馈"]
+  },
+  "groupList": ["精选组件", "原子组件"],
+  "ignoreComponents": {}
+}
