@@ -2,7 +2,32 @@
   <div v-if="hasContent" class="lowcode-component-panel">
     <div class="header"></div>
     <el-tabs>
-      <el-tab-pane v-for="group in filter" :label="group.name" :name="group.name">{{ group.name }}</el-tab-pane>
+      <el-tab-pane 
+        v-for="group in filter" 
+        :label="group.name" 
+        :key="group.name"
+      >
+      <div>
+        <Category 
+          v-for="category in group.categories"
+          :name="category.name"
+          :key="category.name"
+        >
+        <List>
+          <template v-for="component in category.components">
+            <CustomComponent 
+              v-for="snippet in component.snippets.filter(item => item.id)" 
+              :data="{ 
+                title: snippet.title || component.title,
+                icon: snippet.screenshot || component.icon
+              }"
+              :key="`${group.name}_${component.componentName}_${snippet.title}`"
+            />
+          </template>
+        </List>
+        </Category>
+      </div>
+    </el-tab-pane>
     </el-tabs>
   </div>
   <div v-else class="empty">
@@ -10,7 +35,12 @@
   </div>
 </template>
 <script setup>
+import './index.scss'
 import { onMounted, ref, computed } from 'vue'
+
+import Category from '../components/category.vue'
+import List from '../components/list.vue'
+import CustomComponent from '../components/component.vue'
 
 import transform from '../utils/transform'
 
