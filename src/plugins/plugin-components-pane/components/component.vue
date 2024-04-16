@@ -1,5 +1,5 @@
 <template>
-  <div class="snippet card" :title="data.title">
+  <div class="snippet card" :title="data.title" :data-id="data.snippet.id">
     <div class="icon">
       <img :src="data.icon" alt="" />
     </div>

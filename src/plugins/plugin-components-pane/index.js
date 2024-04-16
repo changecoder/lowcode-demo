@@ -12,7 +12,7 @@ const ComponentPanelPlugin = ctx => {
         contentProps: {},
         props: {
           align: 'top',
-          icon: '组件',
+          icon: 'Wallet',
           description: '组件库'
         }
       })
