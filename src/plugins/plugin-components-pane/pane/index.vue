@@ -109,7 +109,7 @@ const getSnippetId = (elem) => {
   if (!elem) {
     return null
   }
-  while (shell !== elem) {
+  while (shell !== elem && elem.classList) {
     if (elem.classList.contains('snippet')) {
       return elem.dataset.id
     }
@@ -124,3 +124,9 @@ const onClick = (e) => {
 }
 
 </script>
+<style scoped>
+.container {
+  max-height: 800px;
+  overflow-y: overlay;
+}
+</style>
