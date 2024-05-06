@@ -13,6 +13,10 @@ const registerPlugins = async () => {
 (async function main() {
   await registerPlugins()
 
-  init(document.getElementById('lce-container'))
+  init(document.getElementById('lce-container'), {
+    simulatorUrl: [
+      '/js/vue-simulator-renderer.js', 
+      '/js/vue-simulator-renderer.css']
+  })
 })()
 
