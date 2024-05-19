@@ -1,10 +1,11 @@
-import ComponentPanelPlugin from '@/plugins/plugin-components-pane'
 import EditorInitPlugin from '@/plugins/plugin-editor-init'
-import './global.scss'
+import ComponentPanelPlugin from '@/plugins/plugin-components-pane'
 
-const { init, plugins } = window.CCLowcodeEngine
+import './main.less'
 
-const registerPlugins = async () => {
+const { init, plugins } = (window as any).CCLowcodeEngine
+
+async function registerPlugins() {
   await plugins.register(EditorInitPlugin)
 
   await plugins.register(ComponentPanelPlugin)
@@ -13,10 +14,5 @@ const registerPlugins = async () => {
 (async function main() {
   await registerPlugins()
 
-  init(document.getElementById('lce-container'), {
-    simulatorUrl: [
-      '/js/vue-simulator-renderer.js', 
-      '/js/vue-simulator-renderer.css']
-  })
+  init(document.getElementById('lce-container'))
 })()
-

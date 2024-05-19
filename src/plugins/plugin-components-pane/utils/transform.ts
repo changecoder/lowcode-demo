@@ -1,6 +1,6 @@
-const transform = (raw) => {
-  let groupList = []
-  let categoryList = []
+const transform = (raw: any) => {
+  let groupList: any = []
+  let categoryList: any = []
   let ignoreComponents = {}
   let componentList = []
 
@@ -13,8 +13,8 @@ const transform = (raw) => {
     ignoreComponents = raw.ignoreComponents
   }
 
-  const snippets = []
-  const groups = []
+  const snippets: any[] = []
+  const groups: any[] = []
   // 如果 assets 有 sort 属性，则表示为符合新协议规范的 assets
   if (raw?.sort?.groupList && raw?.sort?.categoryList) {
     const map = {}

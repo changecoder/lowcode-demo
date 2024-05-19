@@ -1,9 +1,10 @@
 import ComponentsPane from './pane/index.vue'
 
-const ComponentPanelPlugin = ctx => {
+const ComponentPanelPlugin = (ctx: any) => {
   return {
     async init() {
       const { skeleton, project } = ctx
+      // 注册组件面板
       const componentsPane = skeleton.add({
         area: 'leftArea',
         type: 'PanelDock',
@@ -13,7 +14,7 @@ const ComponentPanelPlugin = ctx => {
         props: {
           align: 'top',
           icon: 'Wallet',
-          description: '组件库'
+          description: '组件库',
         }
       })
       componentsPane?.disable?.()
