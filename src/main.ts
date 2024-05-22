@@ -3,7 +3,7 @@ import ComponentPanelPlugin from '@/plugins/plugin-components-pane'
 
 import './main.less'
 
-const { init, plugins } = (window as any).CCLowcodeEngine
+const { init, plugins } = (window as any).CCLowCodeEngine
 
 async function registerPlugins() {
   await plugins.register(EditorInitPlugin)
