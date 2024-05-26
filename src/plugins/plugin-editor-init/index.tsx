@@ -1,5 +1,5 @@
 import assets from '../../services/assets.json'
-import schema from '../../services/schema.json'
+import { getPageSchema } from '../../services/mockService'
 
 const EditorInitPlugin = (ctx: any, options: any) => {
   return {
@@ -10,8 +10,9 @@ const EditorInitPlugin = (ctx: any, options: any) => {
       config.set('scenarioName', scenarioName)
       // 设置物料描述
       await material.setAssets(assets)
+      const schema = await getPageSchema(scenarioName)
       // 加载 schema
-      project.importSchema(schema)
+      project.openDocument(schema)
     }
   }
 }

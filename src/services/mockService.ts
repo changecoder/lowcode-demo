@@ -1,4 +1,6 @@
 import { ElMessage } from 'element-plus'
+import schema from './schema.json'
+
 const { project, material } = (window as any).CCLowCodeEngine
 
 export const saveSchema = async (scenarioName: string = 'unknown') => {
@@ -21,6 +23,14 @@ const setProjectSchemaToLocalStorage = (scenarioName: string) => {
   );
 }
 
+export const getProjectSchemaFromLocalStorage = (scenarioName: string) => {
+  if (!scenarioName) {
+    console.error('scenarioName is required!')
+    return
+  }
+  return JSON.parse(window.localStorage.getItem(getLSName(scenarioName)) || '{}')
+}
+
 const getLSName = (scenarioName: string, ns: string = 'projectSchema') => `${scenarioName}:${ns}`
 
 const setPackagesToLocalStorage = async (scenarioName: string) => {
@@ -33,4 +43,14 @@ const setPackagesToLocalStorage = async (scenarioName: string) => {
     getLSName(scenarioName, 'packages'),
     JSON.stringify(packages)
   )
+}
+
+export const getPageSchema = async (scenarioName: string = 'unknown') => {
+  const pageSchema = getProjectSchemaFromLocalStorage(scenarioName).componentsTree?.[0]
+
+  if (pageSchema) {
+    return pageSchema
+  }
+
+  return schema
 }

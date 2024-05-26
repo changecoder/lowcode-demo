@@ -127,7 +127,7 @@ const onClick = (e) => {
 <style scoped>
 .container {
   width: 100%;
-  height: 100vh;
+  height: calc(100vh - 160px);
   overflow-y: overlay;
 }
 </style>
