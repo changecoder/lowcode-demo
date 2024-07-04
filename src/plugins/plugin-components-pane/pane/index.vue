@@ -8,7 +8,7 @@
         :name="group.name"
         :key="group.name"
       >
-      <div class="container" ref="shell">
+      <div class="container" :ref="registerAdditive">
         <el-collapse v-model="expandItems">
           <el-collapse-item 
             v-for="category in group.categories"
@@ -41,14 +41,14 @@
 </template>
 <script setup>
 import './index.scss'
-import { onMounted, ref, computed, watch } from 'vue'
+import { onMounted, ref, computed } from 'vue'
 
 import List from '../components/list.vue'
 import CustomComponent from '../components/component.vue'
-
 import transform from '../utils/transform'
+import ComponentManager from '../store'
 
-const { material } = window.CCLowCodeEngine || {}
+const { material, common } = window.CCLowCodeEngine || {}
 
 const isNewEngineVersion = !!material
 
@@ -59,8 +59,7 @@ const props = defineProps({
 const filter = ref([])
 const expandItems = ref([])
 const activeGroup = ref('')
-const shell = ref()
-
+const store = new ComponentManager()
 const hasContent = computed(() => !!filter.value.filter(item => {
   return item?.categories?.filter(category => {
     return category?.components?.length
@@ -73,7 +72,9 @@ const initComponentList = () => {
 
   const meta = transform(rawData)
 
-  const { groups } = meta
+  const { groups, snippets } = meta
+
+  store.setSnippets(snippets)
 
   filter.value = groups
   if (groups[0]) {
@@ -85,11 +86,6 @@ const initComponentList = () => {
 const onTabChange = (val) => {
   expandItems.value = filter.value.find(item => item.name === val).categories.map(item => item.name)
 }
-
-watch(() => shell.value, (newVal, oldVal) => {
-  oldVal?.forEach(item => item.removeEventListener('click', onClick))
-  newVal.forEach(item => item.addEventListener('click', onClick))
-})
 
 onMounted(() => {
   const { editor } = props
@@ -105,24 +101,47 @@ onMounted(() => {
   }
 })
 
-const getSnippetId = (elem) => {
-  if (!elem) {
+const registerAdditive = (shell) => {
+  if (!shell || shell.dataset.registered) {
+    return
+  }
+
+  function getSnippetId(elem) {
+    if (!elem) {
+      return null
+    }
+    while (shell !== elem) {
+      if (elem.classList.contains('snippet')) {
+        return elem.dataset.id
+      }
+      elem = elem.parentNode
+    }
     return null
   }
-  while (shell !== elem && elem.classList) {
-    if (elem.classList.contains('snippet')) {
-      return elem.dataset.id
-    }
-    elem = elem.parentNode
+
+  const designer = props.editor?.get('designer')
+  const _dragon = designer?.dragon
+  if (!_dragon || !designer) {
+    return
   }
-  return null
-}
 
-const onClick = (e) => {
-  const id = getSnippetId(e.target)
-  console.log(id)
-}
+  _dragon.from(shell, (e) => {
+    const doc = designer?.currentDocument
+    const id = getSnippetId(e.target)
+    if (!doc || !id) {
+      return false
+    }
 
+    const dragTarget = {
+      type: 'nodedata',
+      data: store.getSnippetById(id)
+    }
+
+    return dragTarget
+  })
+
+  shell.dataset.registered = 'true'
+}
 </script>
 <style scoped>
 .container {

@@ -1,3 +1,13 @@
+import { VNode } from "vue";
+
+export interface SnippetMeta {
+  id?: string;
+  componentName: string;
+  title: Text;
+  screenshot?: string | VNode;
+  schema: any;
+}
+
 const transform = (raw: any) => {
   let groupList: any = []
   let categoryList: any = []

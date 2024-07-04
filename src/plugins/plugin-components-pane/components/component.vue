@@ -43,6 +43,7 @@ defineProps(['data'])
 
     > img {
       width: 100%;
+      pointer-events: none;
     }
   }
 
